@@ -1,0 +1,5 @@
+development:
+  adapter: sqlite3
+  database: db/university.sqlite3
+  pool: 32
+  timeout: 5000

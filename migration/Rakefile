@@ -1,0 +1,8 @@
+require 'foreigner'
+require 'standalone_migrations'
+
+StandaloneMigrations::Tasks.load_tasks
+
+StandaloneMigrations.on_loaded do
+    Foreigner.load
+end

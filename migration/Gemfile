@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'standalone_migrations'
+gem 'foreigner'
+gem 'sqlite3'
+gem 'namey'
+gem 'haikunator'
