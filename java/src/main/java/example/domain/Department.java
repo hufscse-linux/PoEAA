@@ -4,22 +4,22 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Students")
-public class Student {
+@Table(name="Departments")
+public class Department {
   @Id @GeneratedValue
   @Column(name="id")
   private long id;
   @Column(name="name")
   private String name;
 
-  @ManyToOne
-  @JoinColumn(name="department_id")
-  private Department department;
-
-  @ManyToMany
-  @JoinTable(name="course_registrations")
-  @JoinColumn(name="student_id")
+  @OneToMany
   private List<Course> courses;
+
+  @OneToMany
+  private List<Student> students;
+
+  @OneToMany
+  private List<Professor> professors;
   
   public void setId(long id) {
     this.id = id;
@@ -36,14 +36,6 @@ public class Student {
     return this.name;
   }
 
-  public void setDepartment(Department department) {
-    this.department = department;
-  }
-  
-  public Department getDepartment() {
-    return this.department;
-  }
-
   public void setCourses(List<Course> courses) {
     this.courses = courses;
   }
@@ -52,4 +44,21 @@ public class Student {
     return this.courses;
   }
 
+  public void setStudents(List<Student> students) {
+    this.students = students;
+  }
+
+  public List<Student> getStudents() {
+    return this.students;
+  }
+
+  public void setProfessors(List<Professor> professors) {
+    this.professors = professors;
+  }
+
+  public List<Professor> getProfessors() {
+    return this.professors;
+  }
+  
+  
 };

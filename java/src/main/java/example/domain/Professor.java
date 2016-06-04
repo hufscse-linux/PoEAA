@@ -4,8 +4,8 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Students")
-public class Student {
+@Table(name="Professors")
+public class Professor {
   @Id @GeneratedValue
   @Column(name="id")
   private long id;
@@ -15,10 +15,8 @@ public class Student {
   @ManyToOne
   @JoinColumn(name="department_id")
   private Department department;
-
-  @ManyToMany
-  @JoinTable(name="course_registrations")
-  @JoinColumn(name="student_id")
+  
+  @OneToMany
   private List<Course> courses;
   
   public void setId(long id) {
@@ -51,5 +49,5 @@ public class Student {
   public List<Course> getCourses() {
     return this.courses;
   }
-
+  
 };
