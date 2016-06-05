@@ -16,18 +16,17 @@ public class StudentTest {
     // setup the session factory
     Configuration configuration = new Configuration();
     configuration.addAnnotatedClass(Student.class);
+    configuration.addAnnotatedClass(Department.class);
+    configuration.addAnnotatedClass(Professor.class);
+    configuration.addAnnotatedClass(Course.class);
 
     configuration.setProperty("hibernate.dialect",
-                              "org.hibernate.dialect.H2Dialect");
+                              "org.hibernate.dialect.SQLiteDialect");
     configuration.setProperty("hibernate.connection.driver_class",
                               "org.sqlite.JDBC");
     configuration.setProperty("hibernate.connection.url",
-                              "jdbc:h2:mem:university");
-    configuration.setProperty("hibernate.hbm2ddl.auto",
-                              "create");
-    configuration.setProperty("hibernate.hbm2ddl.import_files",
-                              "dump.sql");
-
+                              "jdbc:sqlite:university.sqlite3");
+    
     sessionFactory = configuration.buildSessionFactory();
     session = sessionFactory.openSession();
   }

@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Courses")
+@Table(name="courses")
 public class Course {
   @Id @GeneratedValue
   @Column(name="id")
@@ -21,8 +21,10 @@ public class Course {
   private Professor professor;
   
   @ManyToMany
-  @JoinTable(name="course_registrations")
-  @JoinColumn(name="course_id")
+  @JoinTable(
+      name="course_registrations",
+      joinColumns={@JoinColumn(name="course_id")},
+      inverseJoinColumns={@JoinColumn(name="student_id")})
   private List<Student> students;
   
   public void setId(long id) {

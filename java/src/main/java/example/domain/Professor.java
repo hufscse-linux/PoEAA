@@ -4,7 +4,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Professors")
+@Table(name="professors")
 public class Professor {
   @Id @GeneratedValue
   @Column(name="id")

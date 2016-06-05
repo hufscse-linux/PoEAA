@@ -2,19 +2,15 @@ apply plugin: 'java'
 
 repositories {
   jcenter()
+  maven { url 'https://jitpack.io' }
 }
 
 dependencies {
   compile 'org.slf4j:slf4j-api:1.7.21'
-  compile 'javax.persistence:persistence-api:1.0.2'
   compile 'org.hibernate:hibernate-core:5.2.0.Final'
-
-  compile 'com.h2database:h2:1.4.192'
-  runtime 'org.xerial:sqlite-jdbc:3.8.11.2'
-  runtime 'net.kemitix:sqlite-dialect:0.1.0'
+  compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final'
   
   testCompile 'junit:junit:4.12'
   testRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
-  testRuntime 'net.kemitix:sqlite-dialect:0.1.0'
-
+  testRuntime 'com.github.gwenn:sqlite-dialect:master'
 }
