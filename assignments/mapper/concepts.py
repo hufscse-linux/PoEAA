@@ -21,8 +21,9 @@ def sql_result_from_database():
     # read university.sqlite3 and select student information
     pass
 
-result = sql_result_from_database()
-student = StudentMapper.map_to_object(result)
+results = sql_result_from_database()
+student_result = results[0]
+student = StudentMapper.map_to_object(student_result)
 
 pprint(student) # output is mapped result from database
 

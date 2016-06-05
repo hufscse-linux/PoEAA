@@ -39,6 +39,10 @@ public class StudentTest {
   @Test
   public void loadStudents() {
     List<Student> students = session.createCriteria(Student.class).list();
+
+    Student student = students.get(0);
+    System.out.println("Student name: " + student.getName() + ", department: " + student.getDepartment().getName());
+
     assertThat(students.isEmpty(), is(false));
   }
 };
