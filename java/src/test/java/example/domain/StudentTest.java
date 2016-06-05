@@ -12,15 +12,13 @@ public class StudentTest {
   @Test
   public void loadStudents() {
     inSession(
-        new SessionHandler() {
-          public void work(Session session) {
-            List<Student> students = session.createCriteria(Student.class).list();
+        session -> {
+          List<Student> students = session.createCriteria(Student.class).list();
 
-            Student student = students.get(0);
-            System.out.println("Student name: " + student.getName() + ", department: " + student.getDepartment().getName());
+          Student student = students.get(0);
+          System.out.println("Student name: " + student.getName() + ", department: " + student.getDepartment().getName());
 
-            assertThat(students.isEmpty(), is(false));
-          }
+          assertThat(students.isEmpty(), is(false));        
         });
   }
 };
