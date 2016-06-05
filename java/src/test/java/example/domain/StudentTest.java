@@ -10,15 +10,11 @@ import static org.hamcrest.CoreMatchers.*;
 
 public class StudentTest {
   @Test
-  public void loadStudents() {
+  public void students_should_have_department() {
     inSession(
         session -> {
           List<Student> students = session.createCriteria(Student.class).list();
-
-          Student student = students.get(0);
-          System.out.println("Student name: " + student.getName() + ", department: " + student.getDepartment().getName());
-
-          assertThat(students.isEmpty(), is(false));        
+          students.forEach(student -> assertThat(student.getDepartment(), is(notNullValue())));
         });
   }
 };
