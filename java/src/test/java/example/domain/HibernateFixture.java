@@ -1,18 +1,15 @@
 package example.domain;
 
+import java.util.function.*;
 import org.hibernate.*;
 import org.hibernate.cfg.*;
 
 public class HibernateFixture {
   public static final SessionFactory sessionFactory;
 
-  public interface SessionHandler {
-    public void work(Session session);
-  };
-  
-  public static void inSession(SessionHandler handler) {
+  public static void inSession(Consumer<Session> handler) {
     Session session = sessionFactory.openSession();
-    if(handler != null) handler.work(session);
+    if(handler != null) handler.accept(session);
     session.close();
   }
   
