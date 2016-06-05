@@ -33,7 +33,7 @@ class CourseRegistration < ActiveRecord::Base
 end
 
 ActiveRecord::Base.transaction do
-  10.times { Department.new(name: Haikunator.haikunate(0, ' ')) }
+  10.times { Department.create(name: Haikunator.haikunate(0, ' ')) }
 
   departments = Department.all
 
