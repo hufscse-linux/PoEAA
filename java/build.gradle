@@ -17,6 +17,8 @@ dependencies {
   
   // for test
   testCompile 'junit:junit:4.12'
+  testRuntime 'org.slf4j:slf4j-jdk14:1.7.5'
   testRuntime 'org.xerial:sqlite-jdbc:3.8.11.2'
   testRuntime 'com.github.gwenn:sqlite-dialect:master'
 }
+

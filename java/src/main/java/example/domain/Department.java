@@ -3,6 +3,8 @@ package example.domain;
 import java.util.List;
 import javax.persistence.*;
 
+import org.apache.ibatis.annotations.*;
+
 @Entity
 @Table(name="departments")
 public class Department {
@@ -20,6 +22,11 @@ public class Department {
 
   @OneToMany
   private List<Professor> professors;
+
+  public static interface Mapper {
+    @Select("select * from departments where id=#{id}")
+    Department selectOne(long id);
+  };
   
   public void setId(long id) {
     this.id = id;
