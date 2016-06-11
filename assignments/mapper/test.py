@@ -17,13 +17,26 @@ class StudentMapperTest(unittest.TestCase):
         self.assertIsInstance(results, list)
         for student in results:
             self.assertIn(student, self.student_table_data)
-    
 
     def test_StudentMapper_map_to_object(self):
         student_row = self.student_table_data[0]
         student = self.studentMapper.map_to_object(student_row)
         self.assertIsInstance(student, Student)
         self.assertEqual(student.name, student_row[1])
+        self.assertIsInstance(student.dept, Department)
+        self.assertEqual(student.dept.name, student_row[2])
 
-
+    def test_StudentMapper_find_student_object(self):
+        self._insert_student_object_to_student_map_in_StudentMapper()
+        student_row = self.student_table_data[0]
+        student = self.studentMapper.find_object(student_row)
+        self.assertIsInstance(student, Student)
+        self.assertEqual(student.name, student_row[1])
+        self.assertIsInstance(student.dept, Department)
+        
+    def _insert_student_object_to_student_map_in_StudentMapper(self):
+        student_row = self.student_table_data[0]
+        student = self.studentMapper.map_to_object(student_row)
+        self.studentMapper.object_map[student_row[0]] = student
+        
 
