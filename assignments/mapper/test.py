@@ -1,7 +1,7 @@
 import unittest
-import concepts
+import sk_mapper
 import sqlite3
-from concepts import *
+from sk_mapper import *
 
 class StudentMapperTest(unittest.TestCase):    
     
@@ -9,11 +9,11 @@ class StudentMapperTest(unittest.TestCase):
         self.studentMapper = StudentMapper()
         self.conn = sqlite3.connect('university.sqlite3') 
         self.cursor = self.conn.cursor()
-        self.cursor.execute('select * from students')
+        self.cursor.execute('select id, name, department_id from students')
         self.student_table_data = self.cursor.fetchall()
 
     def test_sql_result_from_database(self):
-        results = concepts.sql_result_from_database()
+        results = sk_mapper.sql_result_from_database()
         self.assertIsInstance(results, list)
         for student in results:
             self.assertIn(student, self.student_table_data)
