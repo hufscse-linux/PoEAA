@@ -8,21 +8,25 @@ class Department(object):
         self.name = name
 
 class Student(object):
+    column_name = 's_name'
+    column_dept_name = 'd_name'
+    
+    def __init__(self, **kwargs):
+        for k in kwargs:
+            setattr(self, k, kwargs[k])
 
-    def __init__(self, name, dept):
-        self.name = name
-        self.dept = dept
+    def __repr__(self):
+        return "<Student name: %s, dept: %s>" % (self.name, self.dept)
 
 class StudentMapper(object):
 
     def __init__(self):
         self.object_map = {}
-        self.conn = sqlite3.connect('university.sqlite3')
-        self.cursor = self.conn.cursor()
 
-    def map_to_object(self, student_table_row):
-        department = Department(student_table_row[2])
-        student = Student(student_table_row[1], department)
+    def map_to_object(self, row):
+        column_name = Student.__dict__['column_name']
+        column_dept_name = Student.__dict__['column_dept_name']
+        student = Student(name=row[column_name], dept=row[column_dept_name])
         return student
 
     def find_object(self, student_row):
