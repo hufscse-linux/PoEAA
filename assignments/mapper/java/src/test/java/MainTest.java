@@ -13,7 +13,11 @@ public class MainTest {
 
     @Before
     public void setUp(){
-        this.dbconnection = Main.getDBConnection();
+        try{
+            this.dbconnection = Main.getDBConnection();
+        } catch (Exception e){
+
+        }
     }
 
     @Test
