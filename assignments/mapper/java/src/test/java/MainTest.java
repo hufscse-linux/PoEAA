@@ -11,34 +11,6 @@ public class MainTest {
 
     private Connection dbconnection;
 
-    @Before
-    public void setUp(){
-        try{
-            this.dbconnection = Main.getDBConnection();
-        } catch (Exception e){
-
-        }
-    }
-
-    @Test
-    public void getDBConnectionTest(){
-        try{
-            Connection connection = Main.getDBConnection();
-            assertNotNull(connection);
-        } catch (Exception e){
-
-        }
-    }
-
-    @Test 
-    public void getStudentTableTest(){
-        try{
-            ResultSet result = Main.getStudentTable(this.dbconnection);
-            assertNotNull(result);
-        } catch (Exception e){
-
-        }
-    }
 
 
 }
