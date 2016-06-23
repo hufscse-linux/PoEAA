@@ -1,4 +1,5 @@
 package mapper;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertNotNull;
@@ -25,11 +26,11 @@ public class StudentMapperTest{
     }
 
     @Test
-    public void findTest(){
+    public void findTest() throws Exception {
         Student student = mapper.find(1);
         assertEquals(1, student.getId());
         student = mapper.find(2);
         assertEquals(2, student.getId());
     }
-    
+
 }

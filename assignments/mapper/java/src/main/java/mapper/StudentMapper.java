@@ -10,7 +10,7 @@ public class StudentMapper{
             " WHERE id = " + id;
     }
 
-    public Student find(long id) {
+    public Student find(long id) throws Exception {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -21,10 +21,12 @@ public class StudentMapper{
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(findStatement(String.valueOf(id)));
             resultSet.next();
-            
+            statement.close();
+            connection.close();
         } catch (Exception e) {
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.exit(0);
+            System.out.println("DB error");
+        }
+        finally {
         }
         return new Student(1, "SunKyu", "CSE");
     }
