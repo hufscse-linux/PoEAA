@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class StudentMapper{
 
-    protected String findStatement(String id){
+    public String findStatement(String id){
         return "SELECT id, name, department" + 
             " FROM students" +
             " WHERE id = " + id;

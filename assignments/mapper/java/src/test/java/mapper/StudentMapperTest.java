@@ -29,8 +29,7 @@ public class StudentMapperTest{
         Student student = mapper.find(1);
         assertEquals(1, student.getId());
         student = mapper.find(2);
-        assertEquals(3, student.getId());
+        assertEquals(2, student.getId());
     }
     
-
 }
