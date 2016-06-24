@@ -11,7 +11,6 @@ import org.junit.Before;
 
 public class MainTest {
 
-    private Connection dbconnection;
 
 
 

@@ -29,6 +29,7 @@ public class StudentMapperTest{
     public void findTest() throws Exception {
         Student student = mapper.find(1);
         assertEquals(1, student.getId());
+        
         student = mapper.find(2);
         assertEquals(2, student.getId());
     }

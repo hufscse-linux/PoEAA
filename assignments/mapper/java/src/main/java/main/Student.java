@@ -3,9 +3,10 @@ package main;
 public class Student {
     private String name;
     private String department;
-    private long id;
+    private int id;
 
-    public Student(long id, String name, String department){
+    public Student(int id, String name, String department){
+        this.id = id;
         this.name = name;
         this.department = department;
     }
