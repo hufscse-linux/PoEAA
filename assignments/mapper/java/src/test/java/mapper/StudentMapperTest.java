@@ -25,18 +25,20 @@ public class StudentMapperTest {
 		String sql = mapper.findStatement("1");
 	}
 
-	void findByIdInSession(int id, Consumer<ResultSet> callback) throws Exception {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
+	void inSession(Function<Statement, ResultSet> cc, Consumer<ResultSet> cr) throws Exception {
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:university.sqlite3");
 			statement = connection.createStatement();
-			String sql = "SELECT id, name FROM students WHERE id=" + id;
-
-			resultSet = statement.executeQuery(sql);
-			if(callback != null) callback.accept(resultSet);
+			if(cc != null) {
+				resultSet = cc.apply(statement);
+				if(cr != null) {
+					cr.accept(resultSet);
+				}
+			}
 		} finally {
 			resultSet.close();
 			statement.close();
@@ -46,11 +48,23 @@ public class StudentMapperTest {
 
 	@Test
 	public void findTest() throws Exception {
-		findByIdInSession(1, rs -> {
+		final int id = 1;
+		inSession(statement -> {
+			String sql = "SELECT id, name FROM students WHERE id=" + id;
+			ResultSet rs = null;
+			try {
+				rs = statement.executeQuery(sql);
+			} catch(Exception e) {
+				System.out.println(e);
+			} finally {
+				return rs;
+			}
+		},
+		rs -> {
 			try {
 				Student student = mapper.map(rs);
 				assertNotNull(student);
-				assertEquals(1, student.getId());
+				assertEquals(id, student.getId());
 			} catch(Exception e) {
 				System.out.println(e);
 			}
