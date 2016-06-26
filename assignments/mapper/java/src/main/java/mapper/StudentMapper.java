@@ -12,11 +12,13 @@ public class StudentMapper{
             " WHERE id = " + id;
     }
 
+    public Student map(ResultSet rs) throws Exception {
+        int studentId = rs.getInt("id");
+        String studentName = rs.getString("name");
+        return new Student(studentId, studentName, "");
+	}
+
     public Student find(int id) throws Exception {
-        if (map.containsKey(id)){
-            return map.get(id);
-        }
-        Student student = null;
         Connection connection = null;
         Statement statement = null;
         int studentId = 1;
@@ -30,18 +32,12 @@ public class StudentMapper{
             resultSet.next();
             studentId = resultSet.getInt("id");
             studentName = resultSet.getString("name");
+        	
+        	return new Student(studentId, studentName, "");
+        } finally {
             statement.close();
             connection.close();
-        } catch (Exception e) {
-            System.out.println("DB error");
-            return;
         }
-        finally {
-            student = new Student(studentId, studentName, "CSE");
-            map.put(id, student);
-
-        }
-        return student;
     }
 
     
