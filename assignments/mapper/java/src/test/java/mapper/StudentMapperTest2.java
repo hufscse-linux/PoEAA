@@ -26,21 +26,23 @@ public class StudentMapperTest2 {
 		String sql = mapper.findStatement("1");
 	}
 
-	void inSession(Consumer<ResultSet> cr) throws Exception {
+	void inSession(int id) throws Exception {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
-		Session session = new Session();
+		Student student = null;
+		Session session = new Session(id);
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:university.sqlite3");
 			statement = connection.createStatement();
 			resultSet = session.getResultSet(statement);
 			if (resultSet != null){
-			    //do somehting maybe consume ResultSet?
-			    if(cr != null){
-			        cr.accept(resultSet);
-                }
+			    student = session.getStudent(resultSet, mapper);
+            }
+            if (student != null){
+				assertNotNull(student);
+				assertEquals(id, student.getId());
             }
 		} finally {
 			if(resultSet != null) resultSet.close();
@@ -52,16 +54,7 @@ public class StudentMapperTest2 {
 	@Test
 	public void findTest() throws Exception {
 		final int id = 1;
-		inSession(
-		rs -> {
-			try {
-				Student student = mapper.map(rs);
-				assertNotNull(student);
-				assertEquals(id, student.getId());
-			} catch(Exception e) {
-				System.out.println(e);
-			}
-		});
+		inSession(id);
 	}
 
 }
