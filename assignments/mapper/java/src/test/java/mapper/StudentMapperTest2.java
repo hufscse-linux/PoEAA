@@ -31,12 +31,13 @@ public class StudentMapperTest2 {
 		Statement statement = null;
 		ResultSet resultSet = null;
 		Student student = null;
-		Session session = new Session(id);
+		String sql = mapper.findStatement(String.valueOf(id));
+		Session session = new Session();
 		try {
 			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection("jdbc:sqlite:university.sqlite3");
 			statement = connection.createStatement();
-			resultSet = session.getResultSet(statement);
+			resultSet = session.getResultSet(statement, sql);
 			if (resultSet != null){
 			    student = session.getStudent(resultSet, mapper);
             }

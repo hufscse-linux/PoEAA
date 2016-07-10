@@ -4,8 +4,7 @@ import java.sql.*;
 import java.util.HashMap;
 
 public class StudentMapper{
-    HashMap <Integer, Student> map = new HashMap<Integer, Student>();
-
+    HashMap map = new HashMap();
     public String findStatement(String id){
         return "SELECT id, name" + 
             " FROM students" +
@@ -21,24 +20,26 @@ public class StudentMapper{
     public Student find(int id) throws Exception {
         Connection connection = null;
         Statement statement = null;
-        int studentId = 1;
         String studentName = "SunKyu";
-        //String departmentId = null;
+        ResultSet resultSet = null;
+        Session session = new Session();
+        Student student = null;
+        String sql = findStatement(String.valueOf(id));
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:university.sqlite3");
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(findStatement(String.valueOf(id)));
-            resultSet.next();
-            studentId = resultSet.getInt("id");
-            studentName = resultSet.getString("name");
-        	
-        	return new Student(studentId, studentName, "");
+            resultSet = session.getResultSet(statement, sql);
+            if (resultSet != null){
+                student = session.getStudent(resultSet, this);
+            }
+            if (student != null) {
+                return student;
+            }
+        	return null;
         } finally {
             statement.close();
             connection.close();
         }
     }
-
-    
 }
