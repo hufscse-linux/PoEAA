@@ -36,6 +36,12 @@ public class Student {
       })
     List<Student> listAll();
   };
+
+  public Student() {}
+  public Student(long id, String name, String dept) {
+    this.id = id;
+    this.name = name;
+  }
   
   public void setId(long id) {
     this.id = id;
