@@ -11,8 +11,8 @@ import java.util.*;
 import java.sql.*;
 import java.util.function.*;
 
-import org.junit.Test;
-import org.junit.Before;
+import org.junit.*;
+import javax.sql.*;
 
 public class StudentMapperTest {
 
@@ -82,12 +82,14 @@ public class StudentMapperTest {
     }
 
     static class SessionFactory {
-        public Session createSession(String driverClass, String connectionString) throws Exception {
-			Class.forName(driverClass);
-			Connection connection = DriverManager.getConnection(connectionString);
-
-            return new Session(connection);
+        public SessionFactory(DataSource dataSource) {
+            this.dataSource = dataSource;
         }
+
+        public Session createSession() throws Exception {
+            return new Session(dataSource.getConnection());
+        }
+        private DataSource dataSource;
     }
 
     static class Session {
@@ -108,14 +110,28 @@ public class StudentMapperTest {
         private Connection connection;
     }
 
+    private static SessionFactory sessionFactory;
+    @BeforeClass
+    public static void setUpClass() {
+        String connectionString = "jdbc:sqlite:university.sqlite3";
+        org.sqlite.SQLiteDataSource dataSource = new org.sqlite.SQLiteDataSource();
+        dataSource.setUrl(connectionString);
+        sessionFactory = new SessionFactory(dataSource);
+    }
+
+    private Session session;
+    @Before
+    public void setUp() throws Exception {
+        session = sessionFactory.createSession();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        session.close();
+    }
 	@Test
 	public void findTest() throws Exception {
 		final int id = 1;
-		
-        String driverClass = "org.sqlite.JDBC";
-        String connectionString = "jdbc:sqlite:university.sqlite3";
-        SessionFactory sessionFactory = new SessionFactory();
-        Session session = sessionFactory.createSession(driverClass, connectionString);
 
         Query query = session.createQuery(Student.class);
         List<String> columns = new ArrayList<String>();
