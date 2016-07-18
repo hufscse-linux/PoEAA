@@ -4,7 +4,7 @@ import java.lang.reflect.*;
 
 import org.junit.*;
 import java.io.PrintStream;
-import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
@@ -32,5 +32,14 @@ public class MakeStringAndPrintToStdoutTest {
         Method println = out_class.getMethod("println", String.class);
         println.invoke(out, str);
         assertEquals(str+"\n", systemOutRule.getLog());
+
+        final ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
+        out = out_field.get(null);
+        out_class = out.getClass();
+        println = out_class.getMethod("println", String.class);
+        println.invoke(out, str);
+        assertEquals(str+"\n", output.toString());
     }
+
 }
