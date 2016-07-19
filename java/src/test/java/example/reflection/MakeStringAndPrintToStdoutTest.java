@@ -1,6 +1,8 @@
 package example.reflection;
 
 import java.lang.reflect.*;
+import example.domain.*;
+import example.domain.Student;
 
 import org.junit.*;
 import java.io.PrintStream;
@@ -40,6 +42,17 @@ public class MakeStringAndPrintToStdoutTest {
         println = out_class.getMethod("println", String.class);
         println.invoke(out, str);
         assertEquals(str+"\n", output.toString());
+    }
+
+    @Test
+    public void testReflactionOfStudent() throws Exception {
+        Class<?> studentClass = Class.forName("example.domain.Student");
+        Student student = new Student(4, "sunkyu", "CSE");
+        Field name = studentClass.getDeclaredField("name");
+        Field dept = studentClass.getDeclaredField("department");
+
+        assertEquals("name", name.getName());
+        assertEquals("department", dept.getName());
     }
 
 }
