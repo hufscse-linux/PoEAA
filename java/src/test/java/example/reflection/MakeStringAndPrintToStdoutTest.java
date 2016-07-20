@@ -47,12 +47,24 @@ public class MakeStringAndPrintToStdoutTest {
     @Test
     public void testReflactionOfStudent() throws Exception {
         Class<?> studentClass = Class.forName("example.domain.Student");
-        Student student = new Student(4, "sunkyu", "CSE");
-        Field name = studentClass.getDeclaredField("name");
-        Field dept = studentClass.getDeclaredField("department");
 
-        assertEquals("name", name.getName());
-        assertEquals("department", dept.getName());
+        Field[] fields = studentClass.getDeclaredFields();
+
+        boolean hasName = false;
+        boolean hasDept = false;
+
+        for (Field field : fields){
+            String fieldName = field.getName();
+            if (fieldName == "name"){
+                hasName = true;
+            }
+            else if(fieldName == "department"){
+                hasDept = true;
+            }
+        }
+
+        assertTrue(hasName);
+        assertTrue(hasDept);
     }
 
 }
