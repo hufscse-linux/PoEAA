@@ -12,6 +12,12 @@ import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 import org.junit.contrib.java.lang.system.*;
 
+import java.util.*;
+import java.sql.*;
+import org.springframework.jdbc.core.*;
+import org.sqlite.SQLiteDataSource;
+
+
 public class MakeStringAndPrintToStdoutTest {
 
 
@@ -65,6 +71,36 @@ public class MakeStringAndPrintToStdoutTest {
 
         assertTrue(hasName);
         assertTrue(hasDept);
+    }
+
+    @Test
+    public void testMappingStudentsByReflaction() throws Exception{
+        List<Student> students = getStudent();
+    }
+
+    public List<Student> getStudent() throws Exception {
+        Class<?> studentClass = Class.forName("example.domain.Student");
+
+        Field[] fields = studentClass.getDeclaredFields();
+
+        String connctionString = "jdbc:sqlite:university.sqlite3";
+        SQLiteDataSource dataSource = new SQLiteDataSource();
+        dataSource.setUrl(connctionString);
+        Connection conn = dataSource.getConnection();
+        ResultSet rs = conn.createStatement().executeQuery("select * from students");
+        ResultSetMetaData rsMetaData = rs.getMetaData();
+        int colCount = rsMetaData.getColumnCount();
+        for ( int i =0 ; i< colCount ; i ++){
+            for ( Field field : fields){
+                if (rsMetaData.getColumnName() == field.getName())
+
+            }
+
+        }
+        
+
+        return null;
+
     }
 
 }
