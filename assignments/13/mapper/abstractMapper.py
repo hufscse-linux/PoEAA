@@ -26,6 +26,7 @@ class abstractMapper(object):
             return result
         except Exception as e:
             print e
+            raise
         finally:
             self.conn.close()
 
